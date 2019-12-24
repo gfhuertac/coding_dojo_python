@@ -1,0 +1,24 @@
+<html>
+    <head>
+        <!-- Latest compiled and minified CSS -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    </head>
+    <body>
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title">Random word (attempt #{{ attempt }})</h3>
+            </div>
+            <div class="panel-body">
+                {{ random_word }}
+            </div>
+            <div class="panel-footer">
+                <h3 class="panel-title">
+                    <form method="POST">
+                        {% csrf_token %}
+                        <button type="submit">Generate</button>
+                    </form>
+                </h3>
+            </div>
+        </div>
+    </body>
+</html>
