@@ -1,0 +1,17 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Index</title>
+        <link rel="stylesheet" href="{% static 'css/styles.css' %}"> 
+    </head>
+    <body>
+        <div class="centered">
+            The current time and date is:
+        </div>
+        <div class="clock light">
+            <p data-date="{{ date }}" data-ampm="{{ ampm }}">{{ time }}</p>
+        </div>
+    </body>
+</html>
