@@ -1,0 +1,18 @@
+{% macro div(activity, min=0, max=50, verb='earns') -%}
+<div class="square panel panel-default">
+    <div class="panel-header">
+        <h3>{{ activity[0]|upper }}{{ activity[1:]|lower }}</h3>
+    </div>
+    <div class="panel-body">
+        <span>({{ verb }} {{min}}-{{max}} golds) </span>
+    </div>
+    <div class="panel-footer">
+        <form action="/process_money" method="post">
+            <input type="hidden" name="building" value="{{ activity|lower }}" />
+            <input type="hidden" name="min" value="{{ min }}" />
+            <input type="hidden" name="max" value="{{ max }}" />
+            <input type="submit" value="Find Gold!" />
+        </form>
+    </div>
+</div>
+{%- endmacro %}
