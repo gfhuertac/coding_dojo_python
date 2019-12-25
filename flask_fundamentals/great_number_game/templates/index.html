@@ -1,0 +1,58 @@
+<html>
+<head>
+    <title>The guess game</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/bootstrap.css') }}">
+</head>
+<body>
+    <header>
+        <div class="navbar navbar-dark bg-dark box-shadow">
+            <div class="container d-flex justify-content-between">
+                <a href="#" class="navbar-brand d-flex align-items-center">
+                    <strong>Welcome to the Great Number game!</strong>
+                </a>
+            </div>
+        </div>
+    </header>
+    <main role="main">
+        <section class="jumbotron text-center">
+            <div class="container">
+                <h1 class="jumbotron-heading">Welcome to the Great Number game!</h1>
+                <p class="lead text-muted">I am thinking a number between 1 and 100. Take a guess!</p>
+                {% if session['attempts'] is defined %}
+                <p class="lead text-muted">You have attempted {{ session['attempts'] }} times so far!</p>
+                {% endif %}
+                <p>
+                    {% if error is not none %}
+                    <div class="alert alert-danger" role="alert">{{ error }}</div>
+                    {% elif guess is defined %}
+                        {% if session['attempts'] > 5 %}
+                            <div class="alert alert-warning" role="alert">You lose! {{ session['random_number'] }} was the number!</div>
+                            <form method='GET' action='/restart' class="form-inline">
+                                <button type="submit" class="btn btn-warning">Try again!</button>
+                            </form>
+                        {% else %}
+                            {% if guess < session['random_number'] %}
+                                <div class="alert alert-warning" role="alert">Too low!</div>
+                            {% elif guess > session['random_number'] %}
+                                <div class="alert alert-warning" role="alert">Too high!</div>
+                            {% else %}
+                                <div class="alert alert-success" role="alert">{{ guess }} was the number!</div>
+                                <form method='GET' action='/restart' class="form-inline">
+                                    <button type="submit" class="btn btn-success">Play again!</button>
+                                </form>
+                            {% endif %}
+                        {% endif %}
+                    {% endif %}
+                </p>
+            </div>
+            <div style="width:300px; margin-left: auto; margin-right: auto;">
+                <form method="POST" class="form-inline">
+                    <input type="text" name="guess_input">
+                    <button class="btn btn-primary" type="submit">Submit</button>
+                </form>
+            </div>
+        </section>
+    </main>
+      
+</body>
+</html>
