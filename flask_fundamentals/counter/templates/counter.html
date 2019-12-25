@@ -1,0 +1,42 @@
+<html>
+<head>
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" crossorigin="anonymous">
+    <style>
+        form {
+            display: inline;
+        }
+        .center-block {
+            display: block;
+            width: 500px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="jumbotron">
+        <div class="center-block">
+            <h1>Counter</h1>
+            <p>{{ counter }} times. (You actually visit {{ visits }} times!)</p>
+        </div>
+        <p class="center-block">
+            <form method='POST' class="form-inline">
+                <input type="hidden" id="times_input" name="times_input" value="2">
+                <button type="submit" class="btn btn-info">Add 2 times</button>
+            </form>
+            <form method='POST' class="form-inline">
+                <div class="form-group">
+                    <label for="times_input">Times: </label>
+                    <input type="text" class="form-control" id="times_input" name="times_input" placeholder="1">
+                </div>
+                <button type="submit" class="btn btn-primary">Add Times times</button>
+            </form>
+            <form method='GET' action='/destroy_session' class="form-inline">
+                <button type="submit" class="btn btn-danger">Reset</button>
+            </form>
+        </p>
+    </div>
+</body>
+</html>

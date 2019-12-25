@@ -1,0 +1,8 @@
+>>> import base64
+>>> session='eyJjb3VudGVyIjoxLCJ2aXNpdHMiOjJ9.XgNPYg.gQwQWmozxx7SAcou2kdzzYdnTIk'
+>>> encoded_session_data=session.split('.')[0]
+>>> print(encoded_session_data)
+eyJjb3VudGVyIjoxLCJ2aXNpdHMiOjJ9
+>>> decoded_session_data=base64.urlsafe_b64decode(encoded_session_data)
+>>> print(decoded_session_data)
+b'{"counter":1,"visits":2}'
