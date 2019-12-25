@@ -1,32 +1,36 @@
+from bank_account import BankAccount
+
 class User(object):
-  def __init__(self, username, email_address):# now our method has 2 parameters!
-        self.name = username			# and we use the values passed in to set the name attribute
-        self.email = email_address		# and the email attribute
-        self.account_balance = 0		# the account balance is set to $0, so no need for a third parameter
+  def __init__(self, username, email_address):
+    self.name = username			# and we use the values passed in to set the name attribute
+    self.email = email_address		# and the email attribute
+    self.accounts = {
+      'default': BankAccount(int_rate=0.02, balance=0)
+    }
 
   # adding the deposit method
-  def make_deposit(self, amount):	# takes an argument that is the amount of the deposit
-    if amount > 0:
-    	self.account_balance += amount	# the specific user's account increases by the amount of the value received
-    else:
-      raise Exception('Amount to be deposited should be positive')
+  def make_deposit(self, amount, account='default'):	# takes an argument that is the amount of the deposit
+    self.accounts[account].deposit(amount)	# the specific user's account increases by the amount of the value received
     return self
 
-  def make_withdrawal(self, amount): # have this method decrease the user's balance by the amount specified
-    if self.account_balance >= amount:
-      self.account_balance -= amount
-    else:
-      raise Exception('Amount to be withdrawed should be less or equal than the balance')
+  def make_withdrawal(self, amount, account='default'): # have this method decrease the user's balance by the amount specified
+    self.accounts[account].withdraw(amount)
     return self
 
-  def display_user_balance(self): # have this method print the user's name and account balance to the terminal
+  def display_user_balance(self, account='default'): # have this method print the user's name and account balance to the terminal
     # eg. "User: Guido van Rossum, Balance: $150
-    print(f'User: {self.name}, Balance ${self.account_balance}')
+    print(f'User: {self.name}')
+    self.accounts[account].display_account_info()
 
   #BONUS:
   def transfer_money(self, other_user, amount): # have this method decrease the user's balance by the amount and add that amount to other other_user's balance
     self.make_withdrawal(amount)
     other_user.make_deposit(amount)
+    return self
+
+  # SENSEI BONUS
+  def add_account(self, name, account):
+    self.accounts[name] = account
     return self
 
 if __name__ == '__main__':
