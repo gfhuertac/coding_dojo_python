@@ -10,12 +10,14 @@ class User(object):
     	self.account_balance += amount	# the specific user's account increases by the amount of the value received
     else:
       raise Exception('Amount to be deposited should be positive')
+    return self
 
   def make_withdrawal(self, amount): # have this method decrease the user's balance by the amount specified
     if self.account_balance >= amount:
       self.account_balance -= amount
     else:
       raise Exception('Amount to be withdrawed should be less or equal than the balance')
+    return self
 
   def display_user_balance(self): # have this method print the user's name and account balance to the terminal
     # eg. "User: Guido van Rossum, Balance: $150
@@ -25,6 +27,7 @@ class User(object):
   def transfer_money(self, other_user, amount): # have this method decrease the user's balance by the amount and add that amount to other other_user's balance
     self.make_withdrawal(amount)
     other_user.make_deposit(amount)
+    return self
 
 if __name__ == '__main__':
   from faker import Faker
@@ -33,22 +36,9 @@ if __name__ == '__main__':
   for _ in range(3):
     profile = faker.simple_profile()
     users.append(User(profile['username'], profile['mail']))
-  users[0].make_deposit(100)
-  users[0].make_deposit(200)
-  users[0].make_deposit(300)
-  users[0].make_withdrawal(400)
-  users[0].display_user_balance()
-  users[1].make_deposit(400)
-  users[1].make_deposit(300)
-  users[1].make_withdrawal(200)
-  users[1].make_withdrawal(100)
-  users[1].display_user_balance()
-  users[2].make_deposit(400)
-  users[2].make_withdrawal(100)
-  users[2].make_withdrawal(100)
-  users[2].make_withdrawal(100)
-  users[2].display_user_balance()
-  users[0].transfer_money(users[1], 100)
-  users[0].display_user_balance()
+  users[0].make_deposit(100).make_deposit(200).make_deposit(300).make_withdrawal(400).display_user_balance()
+  users[1].make_deposit(400).make_deposit(300).make_withdrawal(200).make_withdrawal(100).display_user_balance()
+  users[2].make_deposit(400).make_withdrawal(100).make_withdrawal(100).make_withdrawal(100).display_user_balance()
+  users[0].transfer_money(users[1], 100).display_user_balance()
   users[1].display_user_balance()
   
