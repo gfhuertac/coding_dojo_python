@@ -1,0 +1,30 @@
+<html>
+<head>
+  <!-- linking a css style sheet -->
+  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/styles.css') }}">
+  <style>
+    .rectangle1 {
+      background-color: {{color1}};
+      margin: 0 !important;
+    }
+    .rectangle2 {
+      background-color: {{color2}};
+      margin: 0 !important;
+    }
+  </style>
+</head>
+<body>
+
+{% for x in range(rows): %}
+  {% for y in range(columns): %}
+    {% if (x+y)%2 == 0 %}
+  <div class='rectangle1'>&nbsp;</div>
+    {% else %}
+  <div class='rectangle2'>&nbsp;</div>
+    {% endif %}
+  {% endfor %}
+  <br/>
+{% endfor %}
+      
+</body>
+</html>
