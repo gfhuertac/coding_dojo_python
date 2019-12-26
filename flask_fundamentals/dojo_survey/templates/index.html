@@ -1,0 +1,50 @@
+<html>
+
+<head>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/bootstrap.css') }}">
+    </link>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/styles.css') }}">
+    </link>
+</head>
+
+<body>
+    <form class="main container" action="/result" method="POST">
+        <div class="form-group row">
+            <label for="name_input" class="col-sm-4 col-form-label">Your name:</label>
+            <div class="col-sm-8">
+                <input type="text" class="form-control" id="name_input" name="name_input">
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="location_select" class="col-sm-4 col-form-label">Dojo location:</label>
+            <div class="col-sm-8">
+                <select class="form-control" id="location_select" name="location_select">
+                    {% for location in locations %}
+                    <option value="{{ location.id }}">{{ location.name }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="language_select" class="col-sm-4 col-form-label">Favorite language:</label>
+            <div class="col-sm-8">
+                <select class="form-control" id="language_select" name="language_select">
+                    {% for language in languages %}
+                    <option value="{{ language.id }}">{{ language.name }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="comments_input">Comments (optional):</label>
+            <textarea class="form-control" id="comments_input" name="comments_input" rows="7"></textarea>
+        </div>
+        <div class="custom-control custom-checkbox">
+            <input type="checkbox" class="custom-control-input" id="contact_checkbox" name="contact_checkbox">
+            <label class="custom-control-label" for="contact_checkbox">Do you want to be contact by us?</label>
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+</body>
+
+</html>

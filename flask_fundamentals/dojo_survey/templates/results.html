@@ -1,0 +1,39 @@
+<html>
+
+<head>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/bootstrap.css') }}">
+    </link>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/styles.css') }}">
+    </link>
+</head>
+
+<body>
+    <div class="main container">
+        <h3>Submitted Info</h3>
+        <div class="row">
+            <div class="col-sm-4">Name:</div>
+            <div class="col-sm-8">{{ name }}</div>
+        </div>
+        <div class="row">
+            <div class="col-sm-4">Dojo location:</div>
+            <div class="col-sm-8">{{ location }}</div>
+        </div>
+        <div class="row">
+            <div class="col-sm-4">Favorite language:</div>
+            <div class="col-sm-8">{{ language }}!!!</div>
+        </div>
+        <div class="row">
+            <div class="col-sm-4">Comments:</div>
+            <div class="col-sm-8">{{ comments }}</div>
+        </div>
+        <div class="row">
+            <div class="col-sm-4">Want to be contacted:</div>
+            <div class="col-sm-8">{{ contact }}</div>
+        </div>
+        <div class="row">
+            <button class="btn btn-primary" onclick="document.location='/'">Go back</button>
+        </div>
+    </div>
+</body>
+
+</html>
