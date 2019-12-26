@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="en">
+{% load static %}
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Ninja Gold</title>
+
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"
+        integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" crossorigin="anonymous">
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+</head>
+
+<body>
+    <h1>Welcome to Ninja Gold!</h1>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-md-2">Your Gold:</div>
+            <div class="col-md-4 score bg-info">{{ request.session.gold }}</div>
+        </div>
+        <br>
+        <div class="row">
+            <div class="col-md-2">
+                {% include 'activity.html' with activity='farm' min=10 max=20 %}
+            </div>
+            <div class="col-md-2">
+                {% include 'activity.html' with activity='cave' min=5 max=10 %}
+            </div>
+            <div class="col-md-2">
+                {% include 'activity.html' with activity='house' min=2 max=5 %}
+            </div>
+            <div class="col-md-2">
+                {% include 'activity.html' with activity='casino' verb='earns/takes' %}
+            </div>
+        </div>
+        <br>
+        <div class="row">
+            <form action="/reset" method="post">
+                {% csrf_token %}
+                <input class="btn btn-danger" type="submit" value="Reset" />
+            </form>
+        </div>
+        <br>
+        <div class="row">Activities:</div>
+        <div class="row">
+            {{ request.session.activities|safe }}
+        </div>
+    </div>
+
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="https://code.jquery.com/jquery-1.12.4.min.js"
+        integrity="sha384-nvAa0+6Qg9clwYCGGPpDQLVpLNn0fRaROjHqs13t4Ggj3Ez50XnGQqc/r8MhnRDZ"
+        crossorigin="anonymous"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"
+        integrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd"
+        crossorigin="anonymous"></script>
+</body>
+
+</html>

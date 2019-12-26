@@ -1,0 +1,10 @@
+.square {
+    display: inline-block;
+    width: 200px;
+    height: 155px;
+    background-color: burlywood;
+}
+.score {
+    width: 100px;
+    text-align: right;
+}
