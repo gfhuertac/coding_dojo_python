@@ -1,0 +1,37 @@
+>>> from users_app.models import *
+>>> User.objects.create(first_name='Gonzalo', last_name='Huerta', email_address='gonzalo.huerta@uai.cl', age=41)
+<User: User object (1)>
+>>> User.objects.create(first_name='Federico', last_name='Antico', email_address='federico.antico@uai.cl', age=39)
+<User: User object (2)>
+>>> User.objects.create(first_name='Danilo', last_name='Borquez', email_address='danilo.borquez@edu.uai.cl', age=31)
+<User: User object (3)>
+>>> users = User.objects.all()
+>>> print(users)
+<QuerySet [<User: User object (1)>, <User: User object (2)>, <User: User object (3)>]>
+>>> last = User.objects.last()
+>>> print(last)
+User object (3)
+>>> first = User.objects.first()
+>>> print(first)
+User object (1)
+>>> user_3 = User.objects.get(id=3)
+>>> print(user_3)
+User object (3)
+>>> user_3.name = 'Pancakes'
+>>> user_3.save()
+>>> user_2 = User.objects.get(id=2)
+>>> user_2.delete()
+(1, {'users_app.User': 1})
+>>> sorted_users = User.objects.all().order_by('first_name')
+>>> for user in sorted_users:
+...   print(user.first_name)
+...
+Danilo
+Gonzalo
+>>> reversed_users = User.objects.all().order_by('-first_name')
+>>> for user in reversed_users:
+...   print(user.first_name)
+...
+Gonzalo
+Danilo
+>>>
