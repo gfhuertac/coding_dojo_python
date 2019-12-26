@@ -1,0 +1,60 @@
+<html>
+{% load static %}
+
+<head>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap.css' %}">
+    </link>
+</head>
+
+<body>
+    <h1>All the users</h1>
+    <table style="width: 90%; margin: auto" class="table table-bordered table-striped">
+
+        <thead class="thead-dark">
+            <tr>
+                <th scope="col">ID</th>
+                <th scope="col">Name</th>
+                <th scope="col">Email</th>
+                <th scope="col">Age</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for user in users %}
+            <tr>
+                <td>{{ user.id }}</td>
+                <td>{{ user.first_name }} {{ user.last_name }}</td>
+                <td>{{ user.email_address }}</td>
+                <td>{{ user.age }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <br>
+    <hr style="width: 90%; margin: auto;">
+    <br>
+    <h1>Add a user</h1>
+    <form action='process' method="POST" style="width: 90%; margin: auto;">
+        {% csrf_token %}
+        <div class="form-row">
+            <div class="col">
+                <input type="text" id="first_name_input" name="first_name_input" class="form-control" placeholder="First name">
+            </div>
+            <div class="col">
+                <input type="text" id="last_name_input" name="last_name_input" class="form-control" placeholder="Last name">
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="col">
+                <input type="text" id="email_input" name="email_input" class="form-control" placeholder="Email">
+            </div>
+            <div class="col">
+                <input type="text" id="age_input" name="age_input" class="form-control" placeholder="Age">
+            </div>
+        </div>
+        <div class="form-row">
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </div>
+    </form>
+</body>
+
+</html>
