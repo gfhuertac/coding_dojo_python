@@ -1,0 +1,31 @@
+from faker import Faker
+fake = Faker()
+
+from dojo_ninjas_app.models import *
+for _ in range(3):
+  Dojo.objects.create(name=fake.company(), city=fake.city(), state=fake.state_abbr())
+
+dojos = Dojo.objects.all()
+for dojo in dojos:
+  dojo.delete()
+
+for _ in range(3):
+  dojo = Dojo.objects.create(name=fake.company(), city=fake.city(), state=fake.state_abbr())
+  for __ in range(3):
+    Ninja.objects.create(first_name=fake.first_name(), last_name=fake.last_name(), dojo=dojo)
+
+first_dojo = Dojo.objects.first()
+print(first_dojo.ninjas.all())
+
+last_dojo = Dojo.objects.last()
+print(last_dojo.ninjas.all())
+
+last_ninja = Ninja.objects.last()
+print(last_ninja.dojo)
+
+# After second migrations
+from faker import Faker
+fake = Faker()
+
+from dojo_ninjas_app.models import *
+Dojo.objects.create(name=fake.company(), city=fake.city(), state=fake.state_abbr(), desc=fake.sentence())
