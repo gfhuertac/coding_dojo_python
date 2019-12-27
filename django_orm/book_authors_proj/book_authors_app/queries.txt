@@ -1,0 +1,40 @@
+from faker import Faker
+fake = Faker()
+
+from book_authors_app.models import *
+titles = ['C Sharp', 'Java', 'Python', 'PHP', 'Ruby']
+for title in titles:
+  Book.objects.create(title=title, desc=fake.sentence())
+
+names = ['Jane Austen', 'Emily Dickinson', 'Fyodor Dostoevksy', 'William Shakespeare', 'Lau Tzu']
+for name in names:
+  Author.objects.create(first_name=name.split(' ')[0], last_name=name.split(' ')[1])
+
+cs_book = Book.objects.get(title='C Sharp')
+cs_book.title = 'C#'
+cs_book.save()
+
+authors = Author.objects.all()
+authors[3].first_name = 'Bill'
+authors[3].save()
+
+books = Book.objects.all()
+
+authors[0].books.set(books[:2])
+authors[0].save()
+authors[1].books.set(books[:3])
+authors[1].save()
+authors[2].books.set(books[:4])
+authors[2].save()
+authors[3].books.set(books)
+authors[3].save()
+
+print(books[2].authors.values())
+print(books[2].authors.first().__dict__)
+books[2].authors.remove(books[2].authors.first())
+
+books[1].authors.add(authors[4])
+
+print(authors[2].books.values())
+
+print(books[4].authors.values())
