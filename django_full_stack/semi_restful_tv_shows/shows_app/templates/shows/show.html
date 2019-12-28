@@ -1,0 +1,35 @@
+<!DOCTYPE html5>
+<html lang="en">
+
+<head>
+    {% load static %}
+    <meta charset="utf-8" />
+    <link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap.css' %}" />
+</head>
+
+<body>
+    <a href="{% url 'shows' %}" class="btn btn-info" style="position: absolute; top: 5px; right: 5px;">Go back</a>
+    <div class="jumbotron">
+        <h1 class="display-4">{{ show.title }}</h1>
+        <p class="lead">
+            ID: {{ show.id }}
+            <br>
+            Network: {{ show.network }}
+            <br>
+            Release date: {{ show.release_date|date:'F d, Y' }}
+            <br>
+            Description: {{ show.description }}
+        </p>
+    </div>
+
+    <p>Last update: {{ show.updated_at|date:'F d, Y h:m A'}}</p>
+    <p style="text-align: center; width: 100%">
+        <a href="{% url 'show_edit' id=show.id %}" class="btn btn-primary">Edit</a>
+        <a href="javascript:document.getElementById('delete_form').submit();" class="btn btn-danger">Delete</a>
+        <form id="delete_form" action="{% url 'show_destroy' id=show.id %}" method="POST" class="form-inline">
+            {% csrf_token %}
+        </form>
+    </p>
+</body>
+
+</html>
