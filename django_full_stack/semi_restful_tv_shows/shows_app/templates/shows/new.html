@@ -10,9 +10,17 @@
 <body>
     <a href="{% url 'shows' %}" class="btn btn-info" style="position: absolute; top: 5px; right: 5px;">Go back</a>
     <h1>Add a new show</h1>
+    {% if messages %}
+    <ul class="messages">
+        {% for message in messages %}
+        <li {% if message.tags %} class="{{ message.tags }}" {% endif %}>{{ message }}</li>
+        {% endfor %}
+    </ul>
+    {% endif %}
     <div style="width: 80%; margin: auto">
         <form action="{% url 'shows_create' %}" method="POST">
             {% csrf_token %}
+            <input type="hidden" name="id_hidden" value="0">
             <div class="form-group row">
                 <label for="title_input" class="col-sm-4 col-form-label">Title:</label>
                 <div class="col-sm-8">
