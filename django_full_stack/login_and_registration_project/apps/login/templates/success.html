@@ -1,0 +1,24 @@
+<!DOCTYPE html5>
+<html lang="en">
+
+<head>
+    {% load static %}
+    <meta charset="utf-8" />
+    <link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap.css' %}" />
+</head>
+
+<body>
+    <a href="{% url 'logout' %}" class="btn btn-info" style="position: absolute; top: 0; right: 0;">Logout</a>
+    <div class="jumbotron">
+        <h3>Success! Welcome {{ user.first_name }}</h3>
+        <p>
+            {% if type == 'register'%}
+                Successfully registered.
+            {% else %}
+                Welcome back!
+            {% endif %}
+        </p>
+    </div>
+</body>
+
+</html>
