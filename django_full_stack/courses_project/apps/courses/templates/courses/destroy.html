@@ -1,0 +1,30 @@
+<!DOCTYPE html5>
+<html lang="en">
+
+<head>
+    {% load static %}
+    <meta charset="utf-8" />
+    <link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap.css' %}" />
+</head>
+
+<body>
+    <div>
+        <h1 class="display-4">Are you sure you want to delete the following course?</h1>
+        <p class="lead">
+            Name: {{ course.name }}
+            <br>
+            Description: {{ course.description.description }}
+        </p>
+    </div>
+
+    <p style="text-align: center; width: 100%">
+        <a href="{% url 'courses' %}" class="btn btn-info">No</a>
+        | 
+        <a href="javascript:document.getElementById('delete_form').submit();" class="btn btn-danger">Yes! I want to delete this</a>
+        <form id="delete_form" action="{% url 'course_destroy' id=course.id %}" method="POST" style="display: none">
+            {% csrf_token %}
+        </form>
+    </p>
+</body>
+
+</html>

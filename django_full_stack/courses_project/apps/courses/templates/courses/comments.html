@@ -1,0 +1,55 @@
+<!DOCTYPE html5>
+<html lang="en">
+
+<head>
+    {% load static %}
+    <meta charset="utf-8" />
+    <link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap.css' %}" />
+</head>
+
+<body>
+    <a href="{% url 'courses' %}" class="btn btn-info" style="position: absolute; top: 5px; right: 5px;">Go back</a>
+    <h1>Add a new comment</h1>
+    {% if messages %}
+    <ul class="messages">
+        {% for message in messages %}
+        <li {% if message.tags %} class="{{ message.tags }}" {% endif %}>{{ message }}</li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+    <div style="width: 80%; margin: auto">
+        <form method="POST">
+            {% csrf_token %}
+            <div class="form-group row">
+                <label for="content_input" class="col-sm-4 col-form-label">Comment:</label>
+                <div class="col-sm-8">
+                    <textarea class="form-control" id="content_input" name="content_input"></textarea>
+                </div>
+            </div>
+            <button type="submit" class="btn btn-primary">Add new comment</button>
+        </form>
+    </div>
+    <h2>Comments</h2>
+    <table class="table table-striped table-bordered" style="width: 80%; margin: auto;">
+        <thead class="thead-dark">
+            <tr>
+                <th>Comment</th>
+                <th>Date added</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for comment in comments %}
+            <tr>
+                <td>{{ comment.content }}</td>
+                <td>{{ comment.created_at|date:'F d, Y h:iA' }}</td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="4">No comment found</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+
+</html>
