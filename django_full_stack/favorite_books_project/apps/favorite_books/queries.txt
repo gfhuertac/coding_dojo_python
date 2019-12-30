@@ -1,0 +1,50 @@
+from apps.favorite_books.models import *
+from faker import Faker
+fake = Faker()
+
+# Query: Create 3 users
+
+for _ in range(3):
+  User.objects.create(first_name=fake.first_name(), last_name=fake.last_name(), email=fake.email(), password=fake.password())
+
+users = User.objects.all()
+# Query: Have the first user "upload" 2 books
+# Query: Have the second user "upload" 2 books  
+# Query: Have the third user "upload" 2 books  
+for user in users:
+  for _ in range(3):
+    Book.objects.create(title=fake.sentence(nb_words=4), desc=fake.text(), uploaded_by=user)
+
+books = Book.objects.all()
+# Query: Have the first user like the last book and the first book  
+books[0].users_who_like.add(users[0])
+books[0].save()
+books[len(books)-1].users_who_like.add(users[0])
+books[len(books)-1].save()
+
+# Query: Have the second user like the first book and the third book  
+books[0].users_who_like.add(users[1])
+books[0].save()
+books[2].users_who_like.add(users[1])
+books[2].save()
+
+# Query: Have the third user like all books
+for book in books:
+  book.users_who_like.add(users[2])
+  book.save()
+
+# Query: Display all users who like the first book  
+print('The following users like the first book:')
+for user in books[0].users_who_like.all():
+  print(user.first_name, user.last_name)
+
+# Query: Display the user who uploaded the first book 
+print(f'The user {books[0].uploaded_by.first_name} {books[0].uploaded_by.last_name} uploaded the first book')
+
+# Query: Display all users who like the second book  
+print('The following users like the second book:')
+for user in books[1].users_who_like.all():
+  print(user.first_name, user.last_name)
+
+# Query: Display the user who uploaded the second book
+print(f'The user {books[1].uploaded_by.first_name} {books[1].uploaded_by.last_name} uploaded the second book')
