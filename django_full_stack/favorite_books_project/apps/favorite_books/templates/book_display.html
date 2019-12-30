@@ -1,0 +1,15 @@
+<h1>
+    {{ book.title }}
+</h1>
+<p>
+    Added by: {{ book.uploaded_by.first_name }} {{ book.uploaded_by.last_name }}
+</p>
+<p>
+    Added on: {{ book.created_at|date:'F d, Y @ h:i A' }}
+</p>
+<p>
+    Last updated on: {{ book.updated_at|date:'F d, Y @ h:i A' }}
+</p>
+<p>
+    Description: {{ book.desc }}
+</p>

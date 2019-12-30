@@ -1,0 +1,30 @@
+<form id="delete_form" action="{% url 'book_destroy' id=book.id %}" method="POST">
+    {% csrf_token %}
+</form>
+<form action="{% url 'book_update' id=book.id %}" method="POST">
+    {% csrf_token %}
+    <div class="form-group row">
+        <label for="title_input" class="col-sm-4 col-form-label">Title:</label>
+        <div class="col-sm-8">
+            <input type="text" class="form-control" id="title_input" name="title_input" value="{{ book.title }}">
+        </div>
+    </div>
+    <p>
+        Added by: {{ book.uploaded_by.first_name }} {{ book.uploaded_by.last_name }}
+    </p>
+    <p>
+        Added on: {{ book.created_at|date:'F d, Y @ h:i A' }}
+    </p>
+    <p>
+        Last updated on: {{ book.updated_at|date:'F d, Y @ h:i A' }}
+    </p>
+    <div class="form-group row">
+        <label for="description_input" class="col-sm-4 col-form-label">Description:</label>
+        <div class="col-sm-8">
+            <textarea class="form-control" id="description_input" name="description_input">{{ book.desc }}</textarea>
+        </div>
+    </div>
+    <button type="submit" class="btn btn-primary">Update</button>
+    &nbsp;
+    <a href="javascript:document.getElementById('delete_form').submit()" class="btn btn-danger">Delete</a>
+</form>

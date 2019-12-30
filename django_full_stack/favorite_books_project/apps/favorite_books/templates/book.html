@@ -1,0 +1,64 @@
+<!DOCTYPE html5>
+<html lang="en">
+
+<head>
+    {% load static %}
+    <meta charset="utf-8" />
+    <link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap.css' %}" />
+</head>
+
+<body>
+    {% include 'navbar.html' with user=user back='books' %}
+    <div class="container">
+        <div class="row">
+            {% if messages %}
+            <ul class="messages">
+                {% for message in messages %}
+                <li {% if message.tags %} class="{{ message.tags }}" {% endif %}>{{ message }}</li>
+                {% endfor %}
+            </ul>
+            {% endif %}
+        </div>
+        <div class="row">
+            <div class="col">
+                {% if book.uploaded_by == user %}
+                    {% include 'book_edit.html' with book=book %}
+                {% else %}
+                    {% include 'book_display.html' with book=book %}
+                {% endif %}
+            </div>
+            <div class="col">
+                <h1>Users who like this book:</h1>
+                <ul>
+                    {% for usr in book.users_who_like.all %}
+                    <li>
+                        {{ usr.first_name }} {{ usr.last_name }}
+                        {% if user == usr and usr in book.users_who_like.all %}
+                        <a href="javascript:document.getElementById('favorite_form').submit();">
+                            Remove from favorites
+                        </a>
+                        {% endif %}
+                    </li>
+                    {% endfor %}
+                </ul>
+                {% if user not in book.users_who_like.all %}
+                <a href="javascript:document.getElementById('favorite_form').submit();" class="btn btn-primary">
+                    Add to favorites
+                </a>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    <form id="favorite_form" action="{% url 'book_favorite' id=book.id %}" method="POST" style="display:none;">
+        {% csrf_token %}
+        <input type="hidden" name="next" value="{{ request.path }}">
+        {% if user in book.users_who_like.all %}
+        <input type='hidden' name='action_hidden' value='remove'>
+        {% else %}
+        <input type='hidden' name='action_hidden' value='add'>
+        {% endif %}
+    </form>
+
+</body>
+
+</html>
