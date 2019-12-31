@@ -1,0 +1,29 @@
+<div class="card" style="margin-bottom: 10px;">
+    <div class="card-header">
+        {% for v,k in rating_choices %}
+        {% if v <= review.rating %}
+        <i class="fas fa-star"></i>
+        {% else %}
+        <i class="far fa-star"></i>
+        {% endif %}
+        {% endfor %}
+        ({{ review.rating }})
+    </div>
+    <div class="card-body">
+        <p class="card-text">
+            <a href="{% url 'user' id=review.posted_by.id %}">{{ review.posted_by.first_name }}</a> says:
+            <span style="font-style: italic">{{ review.review }}</span>
+            <br>
+            Posted on {{ review.created_at|date:'F d, Y' }}
+        </p>
+    </div>
+    <div class="card-footer">
+        {% if review.posted_by == user %}
+        <form action="{% url 'review_destroy' id=review.book.id review_id=review.id %}" method="POST">
+            {% csrf_token %}
+            <input type="hidden" name="next_hidden" value="{{ request.path }}">
+            <button type="submit" class="btn btn-sm btn-danger">Remove review</button>
+        </form>
+        {% endif %}
+    </div>
+</div>

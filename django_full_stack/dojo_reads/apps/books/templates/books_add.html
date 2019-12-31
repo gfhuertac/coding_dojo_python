@@ -1,0 +1,78 @@
+<!DOCTYPE html5>
+<html lang="en">
+
+<head>
+    {% load static %}
+    <meta charset="utf-8" />
+    <link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap.css' %}" />
+</head>
+
+<body>
+    {% include 'navbar.html' with user=user %}
+    <div class="container">
+        <div class="row">
+            {% if messages %}
+            <ul class="messages">
+                {% for message in messages %}
+                <li {% if message.tags %} class="{{ message.tags }}" {% endif %}>{{ message }}</li>
+                {% endfor %}
+            </ul>
+            {% endif %}
+        </div>
+        <div class="row">
+            <h1>Add a new book title and review</h1>
+            <div class="container" style="width: 80%; margin: auto">
+                <form action="{% url 'books_create' %}" method="POST">
+                    {% csrf_token %}
+                    <div class="form-group row">
+                        <label for="title_input" class="col-sm-4 col-form-label">Book title:</label>
+                        <div class="col-sm-8">
+                            <input type="text" class="form-control" id="title_input" name="title_input">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-sm-4 col-form-label">Author:</label>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-sm-2">&nbsp;</div>
+                        <label for="author_select" class="col-sm-4 col-form-label">Choose from the list:</label>
+                        <div class="col-sm-6">
+                            <select name="author_select" id="author_select">
+                                <option value="0">Select an author</option>
+                                {% for author in authors %}
+                                <option value="{{ author.id }}">{{ author.name }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-sm-2">&nbsp;</div>
+                        <label for="author_input" class="col-sm-4 col-form-label">Or add a new author:</label>
+                        <div class="col-sm-6">
+                            <input type="text" class="form-control" id="author_input" name="author_input">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="review_input" class="col-sm-4 col-form-label">Review:</label>
+                        <div class="col-sm-8">
+                            <textarea class="form-control" id="review_input" name="review_input"></textarea>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="rating_select" class="col-sm-4 col-form-label">Rating:</label>
+                        <div class="col-sm-8">
+                            <select name="rating_select" id="rating_select">
+                                {% for v, k in rating_choices %}
+                                <option value="{{ v }}">{{ k }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Add</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

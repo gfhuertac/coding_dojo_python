@@ -1,0 +1,22 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <a class="navbar-brand" href="#">Welcome {{ user.first_name }}!</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    
+    <div class="collapse navbar-collapse text-right" id="navbarSupportedContent">
+        <div style="width: 100%; text-align: right;">
+            {% if back is not none %}
+            <a href="{% url back %}" class="btn btn-outline-info my-2 my-sm-0" >Go Back</a>
+            &nbsp;
+            {% endif %}
+            <a href="{% url 'books_add' %}" class="btn btn-outline-info my-2 my-sm-0" >Add book and Review</a>
+            &nbsp;
+        </div>
+        <form action="{% url 'logout' %}" class="form-inline my-2 my-lg-0">
+            {% csrf_token %}
+            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Logout</button>
+        </form>
+    </div>
+</nav>

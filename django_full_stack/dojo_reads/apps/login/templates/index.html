@@ -1,0 +1,32 @@
+<!DOCTYPE html5>
+<html lang="en">
+
+<head>
+    {% load static %}
+    <meta charset="utf-8" />
+    <link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap.css' %}" />
+</head>
+
+<body>
+    <div class="container">
+        <div class="row">
+            {% if messages %}
+            <ul class="messages">
+                {% for message in messages %}
+                <li {% if message.tags %} class="{{ message.tags }}" {% endif %}>{{ message }}</li>
+                {% endfor %}
+            </ul>
+            {% endif %}
+        </div>
+        <div class="row">
+            <div class="col" style="padding: 10%">
+                {% include 'register.html' %}
+            </div>
+            <div class="col" style="padding: 10%">
+                {% include 'login.html' %}
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

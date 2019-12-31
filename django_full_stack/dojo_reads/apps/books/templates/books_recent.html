@@ -1,0 +1,36 @@
+<h1>Recent books</h1>
+<div class="container" style="width: 80%; margin: auto">
+    {% for book in books|slice:":3" %}
+    <div class="card">
+        <div class="card-header">
+            <a href="{% url 'book' id=book.id %}">{{ book.title }}</a>
+        </div>
+        <div class="card-body">
+            <p class="card-text">
+                {% with book.reviews.last as review %}
+                Last review: <br>
+                <a href="{% url 'user' id=review.posted_by.id %}">{{ review.posted_by.first_name }}</a> says:
+                <span style="font-style: italic">{{ review.review }}</span>
+                <br>
+                Posted on {{ review.created_at|date:'F d, Y' }}
+                {% endwith %}
+            </p>
+        </div>
+        <div class="card-footer">
+            {% for v,k in rating_choices %}
+            {% if v <= book.avg_review %}
+            <i class="fas fa-star"></i>
+            {% else %}
+            <i class="far fa-star"></i>
+            {% endif %}
+            {% endfor %}
+            ({{book.avg_review}})
+        </div>
+    </div>
+    <br>
+    {% empty %}
+    <div class="alert alert-warning" role="alert">
+        There are no books
+    </div>
+    {% endfor %}
+</div>

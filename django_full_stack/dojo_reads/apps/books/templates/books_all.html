@@ -1,0 +1,16 @@
+<h1>Other books with review</h1>
+<div class="container" style="width: 80%; margin: auto">
+    <ul class="list-group">
+        {% for book in books|slice:'3:' %}
+        <a href="{% url 'book' id=book.id %}" class="list-group-item list-group-item-action">
+            {{ book.title }}
+            <span class="badge badge-primary badge-pill">{{ book.total_reviews }}</span>
+        </a>
+        {% empty %}
+        <li class="list-group-item list-group-item-warning">
+            There are no books
+        </li>
+        {% endfor %}
+    </ul>
+    <br>
+</div>

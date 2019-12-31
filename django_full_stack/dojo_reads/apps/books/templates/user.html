@@ -1,0 +1,44 @@
+<!DOCTYPE html5>
+<html lang="en">
+
+<head>
+    {% load static %}
+    <meta charset="utf-8" />
+    <link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap.css' %}" />
+    <script src="https://kit.fontawesome.com/bccd63cb4e.js" crossorigin="anonymous"></script>
+</head>
+
+<body>
+    {% include 'navbar.html' with user=user back='books' %}
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                <h1>
+                    {{ usr.first_name }} {{ usr.last_name }}
+                </h1>
+                <p>
+                    Email: {{ usr.email }}
+                    <br>
+                    Total Reviews: {{ usr.total_reviews }}
+                </p>
+                <h2>Posted reviews in the following books:</h2>
+                <ul class="list-group">
+                    {% for rev in usr.reviews.all %}
+                    <a href="{% url 'book' id=rev.book.id %}" class="list-group-item list-group-item-action">
+                        {{ rev.book.title }}
+                    </a>
+                    {% empty %}
+                    <li class="list-group-item list-group-item-warning">
+                        There are no books reviewd by this user
+                    </li>
+                    {% endfor %}
+                </ul>
+            </div>
+            <div class="col">
+            </div>
+        </div>
+    </div>
+
+</body>
+
+</html>

@@ -1,0 +1,69 @@
+<!DOCTYPE html5>
+<html lang="en">
+
+<head>
+    {% load static %}
+    <meta charset="utf-8" />
+    <link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap.css' %}" />
+    <script src="https://kit.fontawesome.com/bccd63cb4e.js" crossorigin="anonymous"></script>
+</head>
+
+<body>
+    {% include 'navbar.html' with user=user back='books' %}
+    <div class="container">
+        <div class="row">
+            {% if messages %}
+            <ul class="messages">
+                {% for message in messages %}
+                <li {% if message.tags %} class="{{ message.tags }}" {% endif %}>{{ message }}</li>
+                {% endfor %}
+            </ul>
+            {% endif %}
+        </div>
+        <div class="row">
+            <div class="col">
+                <h1>
+                    {{ book.title }}
+                </h1>
+                <p>
+                    Author: {{ book.author.name }}
+                    <br>
+                    Added by: {{ book.uploaded_by.first_name }} {{ book.uploaded_by.last_name }}
+                </p>
+                <h2>Reviews:</h2>
+                {% for rev in book.reviews.all %}
+                {% include 'review_display.html' with review=rev user=user rating_choices=rating_choices %}
+                {% empty %}
+                <div class="alert alert-warning" role="alert">
+                    There are no reviews
+                </div>
+                {% endfor %}
+            </div>
+            <div class="col">
+                {% if book not in books_reviewed %}
+                <form action="{% url 'review_create' id=book.id %}" method="POST">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <label for="review_input">Add a review</label>
+                        <textarea class="form-control" id="review_input" name="review_input" rows="3"></textarea>
+                    </div>
+                    <div class="form-group row">
+                        <label for="rating_select" class="col-sm-4 col-form-label">Rating:</label>
+                        <div class="col-sm-8">
+                            <select name="rating_select" id="rating_select">
+                                {% for v, k in rating_choices %}
+                                <option value="{{ v }}">{{ k }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Add</button>
+                </form>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+</body>
+
+</html>

@@ -1,0 +1,34 @@
+<!DOCTYPE html5>
+<html lang="en">
+
+<head>
+    {% load static %}
+    <meta charset="utf-8" />
+    <link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap.css' %}" />
+    <script src="https://kit.fontawesome.com/bccd63cb4e.js" crossorigin="anonymous"></script>
+</head>
+
+<body>
+    {% include 'navbar.html' with user=user %}
+    <div class="container">
+        <div class="row">
+            {% if messages %}
+            <ul class="messages">
+                {% for message in messages %}
+                <li {% if message.tags %} class="{{ message.tags }}" {% endif %}>{{ message }}</li>
+                {% endfor %}
+            </ul>
+            {% endif %}
+        </div>
+        <div class="row">
+            <div class="col">
+                {% include 'books_recent.html' with user=user rating_choices=rating_choices %}
+            </div>
+            <div class="col">
+                {% include 'books_all.html' with user=user %}
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
