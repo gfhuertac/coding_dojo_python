@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="en">
+{% load static %}
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <!-- Custom styles for this template -->
+    <link href="{% static 'css/style.css' %}" rel="stylesheet">
+
+    <title>User Dashboard</title>
+</head>
+
+<body style="height:auto !important;">
+
+    {% include 'navbar.html' %}
+
+    <div class="container">
+        <div class="row">
+            <span class="col-1">
+                &nbsp;
+            </span>
+            <span class="col-4">
+                {% include 'edit_information.html' with user=user is_admin=is_admin user_level_choices=user_level_choices %}
+            </span>
+            <span class="col-2">
+                &nbsp;
+            </span>
+            <span class="col-4">
+                {% include 'edit_password.html' with user=user %}
+            </span>
+            <span class="col-1">
+                &nbsp;
+            </span>
+        </div>
+        <div class="row">
+            <span class="col-1">
+                &nbsp;
+            </span>
+            <span class="col-10">
+                {% if request.session.userid == user.id %}
+                {% include 'edit_description.html' with user=user %}
+                {% endif %}
+            </span>
+            <span class="col-1">
+                &nbsp;
+            </span>
+        </div>
+    </div>
+
+    <div style="position: absolute; top: 65px; right: 10px;">
+        <a href="{% url 'dashboard' %}" class="btn btn-info">Return to dashboard</a>
+    </div>
+</body>
+
+</html>

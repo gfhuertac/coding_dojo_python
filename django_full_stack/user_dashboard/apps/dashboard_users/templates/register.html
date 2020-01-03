@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="en">
+{% load static %}
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <!-- Custom styles for this template -->
+    <link href="{% static 'css/style.css' %}" rel="stylesheet">
+
+    <title>User Dashboard</title>
+</head>
+
+<body class="text-center">
+
+    {% include 'navbar.html' %}
+
+    {% if messages %}
+    <ul class="messages">
+        {% for message in messages %}
+        <li {% if message.tags %} class="{{ message.tags }}" {% endif %}>{{ message }}</li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+
+    <form class="form-signin" action="{% url 'user_create' %}" method="POST">
+        {% csrf_token %}
+        <h1 class="h3 mb-3 font-weight-normal">Please register</h1>
+        <label for="email_input" class="sr-only">Email address</label>
+        <input type="email" id="email_input" name="email_input" class="form-control" placeholder="Email address" required autofocus>
+        <label for="first_name_input" class="sr-only">First name</label>
+        <input type="first_name" id="first_name_input" name="first_name_input" class="form-control" placeholder="First name" required>
+        <label for="last_name_input" class="sr-only">Last name</label>
+        <input type="last_name" id="last_name_input" name="last_name_input" class="form-control" placeholder="Last name" required>
+        <label for="password_input" class="sr-only">Password</label>
+        <input type="password" id="password_input" name="password_input" class="form-control" placeholder="Password" required>
+        <label for="confirm_input" class="sr-only">Confirm your password</label>
+        <input type="password" id="confirm_input" name="confirm_input" class="form-control" placeholder="Confirm your password" required>
+        <button class="btn btn-lg btn-primary btn-block" type="submit">Register</button>
+        <a href="{% url 'signin' %}">Already have an account? Signin</a>
+    </form>
+</body>
+
+</html>

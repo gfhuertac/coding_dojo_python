@@ -1,0 +1,35 @@
+<fieldset class="border p-2">
+    <legend class="w-auto" style="font-size: small;">Edit information</legend>
+    <form action="{% url 'user_update' id=user.id %}" method="POST">
+        {% csrf_token %}
+        <div class="form-group">
+            <label for="email_input">Email</label>
+            <input type="text" class="form-control" id="email_input" name="email_input" value="{{ user.email }}" required autofocus>
+        </div>
+        <div class="form-group">
+            <label for="first_name_input">First name</label>
+            <input type="text" class="form-control" id="first_name_input" name="first_name_input"
+                value="{{ user.first_name }}" required>
+        </div>
+        <div class="form-group">
+            <label for="last_name_input">Last name</label>
+            <input type="text" class="form-control" id="last_name_input" name="last_name_input"
+                value="{{ user.last_name }}" required>
+        </div>
+        {% if is_admin %}
+        <div class="form-group row">
+            <label for="user_level_select" class="col-sm-4 col-form-label">User level:</label>
+            <div class="col-sm-8">
+                <select name="user_level_select" id="user_level_select">
+                    {% for k, v in user_level_choices %}
+                    <option value="{{ v }}" {% if v == user.user_level %}selected="true"{% endif %}>{{ k }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+        </div>
+        {% endif %}
+        <div class="form-group">
+            <button type="submit" class="btn btn-primary">Update information</button>
+        </div>
+    </form>
+</fieldset>
