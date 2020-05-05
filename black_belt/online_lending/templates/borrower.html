@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="en">
+{% load static %}
+{% load humanize %}
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <!-- Custom styles for this template -->
+    <link href="{% static 'css/style.css' %}" rel="stylesheet">
+
+    <title>Online lending</title>
+</head>
+
+<body class="text-center">
+
+    {% include 'navbar.html' %}
+
+    {% if messages %}
+    <ul class="messages">
+        {% for message in messages %}
+        <li {% if message.tags %} class="{{ message.tags }}" {% endif %}>{{ message }}</li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+
+    <h4>Your Information</h4>
+    <table class="table table-bordered" style="width: auto; margin: auto;">
+        <tbody>
+            <tr>
+                <th>Name: </th>
+                <td>{{ logged_user.first_name }} {{ logged_user.last_name }}</td>
+            </tr>
+            <tr>
+                <th>Amount needed: </th>
+                <td>${{ logged_user.money|floatformat:2|intcomma }}</td>
+            </tr>
+            <tr>
+                <th>Amount raised: </th>
+                <td>${{ logged_user.borrowed_amount|floatformat:2|intcomma }}</td>
+            </tr>
+        </tbody>
+    </table>
+    <br />
+                        
+    <h2>List of people who lent you money</h2>
+    <table class="table table-striped table-bordered" style="width: 80%; margin: auto;">
+        <thead class="thead-dark">
+            <tr>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Amount lent</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for debt in debts %}
+            <tr>
+                <td>{{ debt.first_name }} {{ debt.last_name }}</td>
+                <td>{{ debt.email }}</td>
+                <td>{{ debt.amount }}</td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="5">No loans found</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+
+</html>

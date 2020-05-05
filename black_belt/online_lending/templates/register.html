@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="en">
+{% load static %}
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <!-- Custom styles for this template -->
+    <link href="{% static 'css/style.css' %}" rel="stylesheet">
+
+    <title>Online lending</title>
+</head>
+
+<body class="text-center">
+
+    {% include 'navbar.html' with current='register' %}
+
+    {% if messages %}
+    <div class="row">
+        <div class="alert alert-danger alert-dismissible fade show form-alert" role="alert">
+            {% for message in messages %}
+            <span {% if message.tags %} class="{{ message.tags }}" {% endif %}>{{ message }}</span> <br/>
+            {% endfor %}
+        </div>
+    </div>
+    {% endif %}
+
+    <div class="row">
+        <h1 class="h1 font-weight-normal" style="text-align: center; width: 100%">Register</h1>
+    </div>
+    <div class="row" style="width: 100%">
+        <!-- Lender form -->
+        <div class="col">
+            <form class="form-login" action="{% url 'user_create' %}" method="POST">
+                {% csrf_token %}
+                <h3 class="h3 mb-3 font-weight-normal">Lender</h3>
+                {% include 'common_fields.html' with initial=initial role=lender_role.value %}
+                <div class="form-group">
+                    <label for="money_input">Money: </label>
+                    <input type="number" id="money_input" name="money_input" {% if initial.user_role_input|add:"0" == lender_role.value %}value="{{initial.money_input}}"{% endif %} class="form-control" placeholder="Amount" required>
+                </div>
+                <button class="btn btn-lg btn-primary btn-block" type="submit">Register</button>
+                <a href="{% url 'login' %}">Already a member?</a>
+                <input type="hidden" id="user_role_input" name="user_role_input" value="{{lender_role.value}}" />
+            </form>
+        </div>
+        <!-- Borrower form -->
+        <div class="col">
+            <form class="form-login" action="{% url 'user_create' %}" method="POST">
+                {% csrf_token %}
+                <h3 class="h3 mb-3 font-weight-normal">Borrower</h3>
+                {% include 'common_fields.html' with initial=initial role=borrower_role.value %}
+                <div class="form-group">
+                    <label for="need_money_for_input">Need money for: </label>
+                    <input type="input" id="need_money_for_input" name="need_money_for_input" {% if initial.user_role_input|add:"0" == lender_role.value %}value="{{initial.need_money_for_input}}"{% endif %} class="form-control" placeholder="Need" required>
+                </div>
+                <div class="form-group">
+                    <label for="description_input">Description: </label>
+                    <textarea id="description_input" name="description_input" class="form-control" placeholder="Description" required>{% if initial.user_role_input|add:"0" == lender_role.value %}{{initial.description_input}}{% endif %}</textarea>
+                </div>
+                <div class="form-group">
+                    <label for="money_input">Amount needed: </label>
+                    <input type="number" id="money_input" name="money_input" {% if initial.user_role_input|add:"0" == lender_role.value %}value="{{initial.money_input}}"{% endif %} class="form-control" placeholder="Amount" required>
+                </div>
+                <button class="btn btn-lg btn-primary btn-block" type="submit">Register</button>
+                <a href="{% url 'login' %}">Already a member?</a>
+                <input type="hidden" id="user_role_input" name="user_role_input" value="{{borrower_role.value}}" />
+            </form>
+        </div>
+    </div>
+</body>
+
+</html>

@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="en">
+{% load static %}
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <!-- Custom styles for this template -->
+    <link href="{% static 'css/style.css' %}" rel="stylesheet">
+
+    <title>Online lending</title>
+</head>
+
+<body class="text-center">
+
+    {% include 'navbar.html' with current='login' %}
+
+    {% if messages %}
+    <div class="row">
+        <div class="alert alert-danger alert-dismissible fade show form-alert" role="alert">
+            {% for message in messages %}
+            <span {% if message.tags %} class="{{ message.tags }}" {% endif %}>{{ message }}</span> <br/>
+            {% endfor %}
+        </div>
+    </div>
+    {% endif %}
+
+    <div class="row">
+        <form class="form-login" action="{% url 'user_check' %}" method="POST">
+            {% csrf_token %}
+            <h1 class="h3 mb-3 font-weight-normal">Log In</h1>
+            <label for="email_input" class="sr-only">Email: </label>
+            <input type="email" id="email_input" name="email_input" class="form-control" placeholder="Email address"
+                required autofocus>
+            <label for="password_input" class="sr-only">Password: </label>
+            <input type="password" id="password_input" name="password_input" class="form-control" placeholder="Password"
+                required>
+            <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+            <a href="{% url 'register' %}">Click here to register</a>
+        </form>
+    </div>
+</body>
+
+</html>
