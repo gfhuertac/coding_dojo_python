@@ -1,7 +1,7 @@
 autopep8==1.4.4
 bcrypt==3.1.7
 cffi==1.13.2
-Django==2.2.13
+Django==2.2.21
 fake-factory==9999.9.9
 Faker==3.0.0
 pycodestyle==2.5.0
